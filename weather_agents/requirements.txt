@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+langgraph
+langchain
+langchain-ollama
+langchain-core
+tavily-python
+streamlit
+requests
+python-dotenv
+langfuse>=2.0.0,<3.0.0
