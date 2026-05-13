@@ -8,8 +8,15 @@ from app.agents.weather_agent import resolve_node, search_and_answer_node
 class WeatherState(TypedDict):
     question: str
     location: Optional[str]
+    country: Optional[str]
     date_ref: Optional[str]
     weather_intent: Optional[str]
+    language: str
+    # extracted once in classify_node, reused by resolve_node (avoids a second LLM call)
+    location_type: Optional[str]
+    location_ambiguous: bool
+    suggested_country: Optional[str]
+    _location_clarified: bool  # True when location came from a prior clarification turn
     is_weather: bool
     needs_clarification: bool
     clarification_question: str

@@ -66,8 +66,14 @@ def chat(req: ChatRequest):
     initial_state: WeatherState = {
         "question": question,
         "location": session.get("location"),
+        "country": session.get("country"),
         "date_ref": session.get("date_ref"),
         "weather_intent": session.get("weather_intent"),
+        "language": session.get("language", "en"),
+        "location_type": None,
+        "location_ambiguous": False,
+        "suggested_country": None,
+        "_location_clarified": bool(session.get("location")),
         "is_weather": False,
         "needs_clarification": False,
         "clarification_question": "",
@@ -100,8 +106,10 @@ def chat(req: ChatRequest):
             session["clarification_count"] = clarification_count
             session["awaiting_field"] = result["missing_field"]
             session["location"] = result.get("location")
+            session["country"] = result.get("country")
             session["date_ref"] = result.get("date_ref")
             session["weather_intent"] = result.get("weather_intent")
+            session["language"] = result.get("language", "en")
             sessions[session_id] = session
             if trace:
                 trace.span(
